@@ -1,0 +1,22 @@
+{
+  "name": "FrameExport",
+  "version": "0.1.0",
+  "summary": "Exporting HIRES frames from video made easy.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/Claeysson/FrameExport",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Martin": "claeysson@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/Claeysson/FrameExport.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "9.0"
+  },
+  "source_files": "FrameExport/Classes/**/*"
+}

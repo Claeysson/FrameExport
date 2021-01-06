@@ -1,0 +1,16 @@
+PODS:
+  - FrameExport (0.1.0)
+
+DEPENDENCIES:
+  - FrameExport (from `../`)
+
+EXTERNAL SOURCES:
+  FrameExport:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  FrameExport: c6d9baf410c827bd46d26773b3ebbdf2c88e24ad
+
+PODFILE CHECKSUM: 9d7d9d0178b98d78299003cc6202b05bfb818a0a
+
+COCOAPODS: 1.10.0
