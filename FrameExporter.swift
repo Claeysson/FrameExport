@@ -5,9 +5,9 @@ import AVFoundation
 /// Since generating a large number of full-sized frames is very memory intensive, the
 /// export generates and writes frames in separate chunks at time. For older devices
 /// and/or large videos, use a rather low chunk size.
-class FrameExport {
+public class FrameExporter {
 
-    struct Request {
+    public struct Request {
         let video: AVAsset
         let times: [CMTime]
         let encoding: ImageEncoding
@@ -16,9 +16,39 @@ class FrameExport {
         let directory: URL?
         /// The maximum number of frames the exporter generates simultaneously.
         let chunkSize: Int
+        
+        public init(video: AVAsset, times: [CMTime], encoding: ImageEncoding, directory: URL? = nil, chunkSize: Int = 5) {
+            self.video = video
+            self.times = times
+            self.encoding = encoding
+            self.directory = directory
+            self.chunkSize = chunkSize
+        }
+        
+        public init(video: AVAsset, fps: Int, encoding: ImageEncoding, directory: URL? = nil, chunkSize: Int = 5) {
+            self.video = video
+            self.encoding = encoding
+            self.directory = directory
+            self.chunkSize = chunkSize
+            
+            let duration = video.duration.seconds
+            
+            let frameInterval = duration / (duration * Double(fps))
+            
+            var times : [CMTime] = []
+            
+            for frame in stride(from: 0, to: duration, by: frameInterval) {
+                times.append(CMTime(seconds: frame, preferredTimescale: video.duration.timescale))
+            }
+            
+            self.times = times
+            
+        }
+
+        
     }
 
-    enum Status {
+    public enum Status {
         case cancelled
         case failed(Error?)
         case progressed([URL])
@@ -39,13 +69,14 @@ class FrameExport {
     }()
 
     /// Handlers are called on an arbitrary queue.
-    init(request: Request, fileManager: FileManager = .default, updateHandler: @escaping (Status) -> ()) {
+    public init(request: Request, fileManager: FileManager = .default, updateHandler: @escaping (Status) -> ()) {
         self.request = request
         self.fileManager = fileManager
         self.updateHandler = updateHandler
     }
 
     deinit {
+        print("DEINIT")
         cancel()
     }
 
@@ -62,7 +93,7 @@ class FrameExport {
     /// - Encoded images could not be written to disk.
     ///
     /// - Note: The export is one-shot and cannot be started again.
-    func start() {
+    public func start() {
         precondition(!didStart, "Export already started. Use a new instance to make a new request.")
         didStart = true
 
@@ -93,7 +124,7 @@ class FrameExport {
     ///
     /// If the export is not yet finished, deletes any successfully written frames so far.
     /// If it is, has no effect.
-    func cancel() {
+    public func cancel() {
         // Manually update the status. It's not sufficient to just cancel subtasks in the
         // queue for the following reasons:
         //
@@ -179,8 +210,8 @@ private extension Array {
     }
 }
 
-extension FrameExport.Status {
-    var urls: [URL]? {
+extension FrameExporter.Status {
+    public var urls: [URL]? {
         switch self  {
         case .progressed(let urls): return urls
         case .succeeded(let urls): return urls
