@@ -111,7 +111,7 @@ extension ViewController: PHPickerViewControllerDelegate {
                 
                 let asset = AVAsset(url: dest)
                 
-                let encoding = ImageEncoding(format: .heif, compressionQuality: 1)
+                let encoding = FrameExport.ImageEncoding(format: .heif, compressionQuality: 1)
                 
                 let request = FrameExport.Request(video: asset, fps: 1, encoding: encoding)
                 

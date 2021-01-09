@@ -8,7 +8,7 @@ extension CGImage {
     /// Returns a data representation of the receiver in the given format including the
     /// given image properties. Returns nil if creating the data fails, e.g. if the given
     /// format is not supported on the device (such as HEIC on iPhone 6S and lower).
-    func data(with encoding: ImageEncoding) -> Data? {
+    func data(with encoding: FrameExport.ImageEncoding) -> Data? {
         let data = NSMutableData()
 
         let uti = encoding.format.uti as CFString
@@ -24,7 +24,7 @@ extension CGImage {
         return data as Data
     }
 
-    func write(to url: URL, with encoding: ImageEncoding) -> Bool {
+    func write(to url: URL, with encoding: FrameExport.ImageEncoding) -> Bool {
         let uti = encoding.format.uti as CFString
         var properties = encoding.metadata ?? Metadata()
         properties[kCGImageDestinationLossyCompressionQuality] = encoding.compressionQuality
