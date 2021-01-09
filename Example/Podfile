@@ -1,12 +1,8 @@
 use_frameworks!
 
-platform :ios, '9.0'
+platform :ios, '14.0'
 
 target 'FrameExport_Example' do
   pod 'FrameExport', :path => '../'
 
-  target 'FrameExport_Tests' do
-    inherit! :search_paths
-
-  end
 end
