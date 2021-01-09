@@ -2,8 +2,8 @@ import AVFoundation
 
 class FrameExportOperation: Operation {
 
-    typealias Request = FrameExporter.Request
-    typealias Status = FrameExporter.Status
+    typealias Request = FrameExport.Request
+    typealias Status = FrameExport.Status
 
     let request: Request
     let frameStartIndex: Int

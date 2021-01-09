@@ -5,7 +5,7 @@ import AVFoundation
 /// Since generating a large number of full-sized frames is very memory intensive, the
 /// export generates and writes frames in separate chunks at time. For older devices
 /// and/or large videos, use a rather low chunk size.
-public class FrameExporter {
+public class FrameExport {
 
     public struct Request {
         let video: AVAsset
@@ -76,7 +76,6 @@ public class FrameExporter {
     }
 
     deinit {
-        print("DEINIT")
         cancel()
     }
 
@@ -210,7 +209,7 @@ private extension Array {
     }
 }
 
-extension FrameExporter.Status {
+extension FrameExport.Status {
     public var urls: [URL]? {
         switch self  {
         case .progressed(let urls): return urls

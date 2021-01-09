@@ -12,7 +12,7 @@ import FrameExport
 
 class ViewController: UIViewController {
     
-    private var frameExport: FrameExporter?
+    private var frameExport: FrameExport?
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
@@ -78,7 +78,7 @@ extension ViewController: PHPickerViewControllerDelegate {
                     activity(false)
                 }
                 
-                let completion = { [weak self] (status: FrameExporter.Status) in
+                let completion = { [weak self] (status: FrameExport.Status) in
                     DispatchQueue.main.async {
                         
                         switch status {
@@ -113,9 +113,9 @@ extension ViewController: PHPickerViewControllerDelegate {
                 
                 let encoding = ImageEncoding(format: .heif, compressionQuality: 1)
                 
-                let request = FrameExporter.Request(video: asset, fps: 1, encoding: encoding)
+                let request = FrameExport.Request(video: asset, fps: 1, encoding: encoding)
                 
-                self.frameExport = FrameExporter(request: request, updateHandler: completion)
+                self.frameExport = FrameExport(request: request, updateHandler: completion)
                 
                 self.frameExport?.start()
                 
